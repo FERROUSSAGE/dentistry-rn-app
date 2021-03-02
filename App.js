@@ -1,21 +1,47 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import { Home as HomeScreen, Appointment as AppointmentScreen } from './screens/index';
+
+const Stack = createStackNavigator(),
+  whiteTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: 'white'
+    },
+  };
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer theme={whiteTheme}>
+      <Stack.Navigator initialRouteName='Home'>
+        <Stack.Screen 
+          name="Home" 
+          component={HomeScreen} 
+          options={{
+            title: 'Список приемов',
+            headerTintColor: '#2A86FF',
+            headerTitleStyle: {
+              fontSize: 24
+            }
+          }}/>
+        <Stack.Screen
+          name="Appointment"
+          component={AppointmentScreen} 
+          options={{ 
+            title: 'Карта пациента',
+            headerTintColor: '#2A86FF',
+            headerTitleStyle: {
+              fontSize: 24
+            }
+          }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
+
